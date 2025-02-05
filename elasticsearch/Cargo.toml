@@ -1,0 +1,68 @@
+[package]
+name = "elasticsearch"
+version = "9.0.0-alpha.1"
+edition = "2018"
+authors = ["Elastic and Contributors"]
+description = "Official Elasticsearch Rust client"
+repository = "https://github.com/elastic/elasticsearch-rs"
+keywords = ["elasticsearch", "elastic", "search", "lucene"]
+categories = ["api-bindings", "database"]
+documentation = "https://docs.rs/elasticsearch/"
+license = "Apache-2.0"
+readme = "../README.md"
+
+[package.metadata.docs.rs]
+all-features = true
+
+[features]
+default = ["native-tls"]
+
+# beta and experimental APIs
+beta-apis = []
+experimental-apis = ["beta-apis"]
+
+# optional TLS
+native-tls = ["reqwest/native-tls"]
+rustls-tls = ["reqwest/rustls-tls"]
+
+[dependencies]
+base64 = "0.22"
+bytes = "1"
+dyn-clone = "1"
+lazy_static = "1"
+percent-encoding = "2"
+reqwest = { version = "0.12", default-features = false, features = [
+    "gzip",
+    "json",
+] }
+url = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+serde_with = "3"
+
+
+#tokio = { version = "1", default-features = false, features = ["macros", "net", "time", "rt-multi-thread"] }
+void = "1"
+flate2 = "^1.0.34"
+
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies.tokio]
+version = "1.0"
+default-features = false
+features = ["macros", "net", "time", "rt-multi-thread"]
+
+[dev-dependencies]
+chrono = { version = "0.4", features = ["serde"] }
+clap = { version = "4", features = ["env"] }
+failure = "0.1"
+futures = "0.3"
+http = "1"
+axum = "0.7"
+#hyper = { version = "1", features = ["server", "http1"] }
+os_type = "2"
+regex = "1"
+#sysinfo = "0.31"
+textwrap = "0.16"
+xml-rs = "0.8"
+
+[build-dependencies]
+rustc_version = "0.4"
